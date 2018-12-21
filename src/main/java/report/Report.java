@@ -17,7 +17,7 @@ abstract public class Report{
         this.message = message;
     }
 
-    public Report() {
+    Report() {
     }
 
     public int getId() {

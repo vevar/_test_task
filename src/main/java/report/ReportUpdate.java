@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ReportUpdate extends Report {
 
-    public enum TypeContent{
+    public enum TypeContent {
         EDITED_VALUE, NEW_VALUE, DELETED_VALUE
     }
 
@@ -25,19 +25,21 @@ public class ReportUpdate extends Report {
     public String getString() {
         String message = "За последние сутки во вверенных Вами сайтах произошли следующие изменения:\n\n";
 
-        StringBuilder strDeleted = new StringBuilder("\nИсчезли следующие страницы:\n");
-        StringBuilder strNew = new StringBuilder("\nПоявились следующие новые страницы:\n");
-        StringBuilder strEdited = new StringBuilder("\nИзменились следующие страницы:\n");
 
-        for (String str: deletedFiles) {
+        StringBuilder strDeleted = new StringBuilder("\nИсчезли следующие страницы:\n");
+        for (String str : deletedFiles) {
             strDeleted.append(str);
             strDeleted.append("\n");
         }
-        for (String str: newFiles) {
+
+        StringBuilder strNew = new StringBuilder("\nПоявились следующие новые страницы:\n");
+        for (String str : newFiles) {
             strNew.append(str);
             strNew.append("\n");
         }
-        for (String str: editedFiles) {
+
+        StringBuilder strEdited = new StringBuilder("\nИзменились следующие страницы:\n");
+        for (String str : editedFiles) {
             strEdited.append(str);
             strEdited.append("\n");
         }
@@ -58,10 +60,10 @@ public class ReportUpdate extends Report {
         return deletedFiles;
     }
 
-    public void addFile(TypeContent type, String value){
+    public void addFile(TypeContent type, String value) {
         if (value == null)
             throw new NullPointerException("Value is incorrect");
-        switch (type){
+        switch (type) {
 
             case EDITED_VALUE:
                 editedFiles.add(value);
