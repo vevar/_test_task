@@ -27,7 +27,6 @@ public class TestReportUpdate extends Assert {
         report = new ReportUpdate();
     }
 
-
     @Test
     public void testOneNewValue() {
         report.addFile(ReportUpdate.TypeContent.NEW_VALUE, NEW_FILE_1);

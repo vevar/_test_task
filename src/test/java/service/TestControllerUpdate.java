@@ -4,10 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import report.ReportUpdate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class TestControllerUpdate extends Assert {
 
@@ -93,7 +90,6 @@ public class TestControllerUpdate extends Assert {
         assertTrue(newFiles.isEmpty());
         assertTrue(editedFiles.isEmpty());
         assertEquals(new HashSet<String>(Arrays.asList(delURLs)), new HashSet<String>(deletedFiles));
-
     }
 
     @Test
@@ -113,6 +109,76 @@ public class TestControllerUpdate extends Assert {
         assertTrue(deletedFiles.isEmpty());
         assertTrue(editedFiles.isEmpty());
         assertEquals(new HashSet<String>(Arrays.asList(newURLs)), new HashSet<String>(newFiles));
+    }
 
+    @Test
+    public void oneUpdateNew() {
+        controllerUpdate.setControllerData("src\\test\\resources\\oneUpdateNew\\yesterday\\",
+                "src\\test\\resources\\oneUpdateNew\\today\\");
+
+        ReportUpdate reportUpdate = controllerUpdate.checkUpdateHTML();
+
+        List<String> newFiles = reportUpdate.getNewFiles();
+        List<String> editedFiles = reportUpdate.getEditedFiles();
+        List<String> deletedFiles = reportUpdate.getDeletedFiles();
+
+        String[] newURLs = {"http://www.example.com/indexNew1.html"};
+
+        assertTrue(deletedFiles.isEmpty());
+        assertTrue(editedFiles.isEmpty());
+        assertEquals(new HashSet<String>(Arrays.asList(newURLs)), new HashSet<String>(newFiles));
+    }
+
+    @Test
+    public void oneUpdateEdit() {
+        controllerUpdate.setControllerData("src\\test\\resources\\oneUpdateEdit\\yesterday\\",
+                "src\\test\\resources\\oneUpdateEdit\\today\\");
+
+        ReportUpdate reportUpdate = controllerUpdate.checkUpdateHTML();
+
+        List<String> newFiles = reportUpdate.getNewFiles();
+        List<String> editedFiles = reportUpdate.getEditedFiles();
+        List<String> deletedFiles = reportUpdate.getDeletedFiles();
+
+        String[] editURLs = {"http://www.example.com/indexEdit1.html"};
+
+        assertTrue(newFiles.isEmpty());
+        assertTrue(deletedFiles.isEmpty());
+        assertEquals(new HashSet<String>(Arrays.asList(editURLs)), new HashSet<String>(editedFiles));
+    }
+
+    @Test
+    public void oneUpdateDelete() {
+        controllerUpdate.setControllerData("src\\test\\resources\\oneUpdateDeleted\\yesterday\\",
+                "src\\test\\resources\\oneUpdateDeleted\\today\\");
+
+        ReportUpdate reportUpdate = controllerUpdate.checkUpdateHTML();
+
+        List<String> newFiles = reportUpdate.getNewFiles();
+        List<String> editedFiles = reportUpdate.getEditedFiles();
+        List<String> deletedFiles = reportUpdate.getDeletedFiles();
+
+        String[] delURLs = {"http://www.example.com/indexDel2.html", "http://www.example.com/indexDel1.html"};
+
+        assertTrue(newFiles.isEmpty());
+        assertTrue(editedFiles.isEmpty());
+        assertEquals(new HashSet<String>(Arrays.asList(delURLs)), new HashSet<String>(deletedFiles));
+    }
+
+    @Test
+    public void nothingUpdate() {
+        controllerUpdate.setControllerData("src\\test\\resources\\nothingUpdate\\yesterday\\",
+                "src\\test\\resources\\nothingUpdate\\today\\");
+
+        ReportUpdate reportUpdate = controllerUpdate.checkUpdateHTML();
+
+        List<String> newFiles = reportUpdate.getNewFiles();
+        List<String> editedFiles = reportUpdate.getEditedFiles();
+        List<String> deletedFiles = reportUpdate.getDeletedFiles();
+
+
+        assertTrue(newFiles.isEmpty());
+        assertTrue(editedFiles.isEmpty());
+        assertEquals(new HashSet<String>(Collections.<String>emptyList()), new HashSet<String>(deletedFiles));
     }
 }
